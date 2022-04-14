@@ -52,9 +52,9 @@
         }
     </style>
     <body class="sb-nav-fixed">
-        <%@include file="Navbar.jsp" %>
+        <%@include file="NavbarHome.jsp" %>
         <div id="layoutSidenav">
-            <%@include file="NavbarMenu.jsp" %>
+            <%@include file="NavbarMenuHome.jsp" %>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
@@ -68,7 +68,7 @@
                                             <div class="text-white">
                                                 <div>
                                                     <i class="fa-solid fa-road features-icon"></i>
-                                                    <div><a class="features-title" href="bai-do-xe?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
+                                                    <div><a class="features-title" href="home?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
                                                     <div class="features-content">CÒN TRỐNG</div>
                                                 </div>
                                             </div>
@@ -79,7 +79,7 @@
                                             <div class="text-white">                               
                                                 <div>
                                                     <i class="fa-solid fa-car features-icon"></i>
-                                                    <div><a class="features-title" href="bai-do-xe?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
+                                                    <div><a class="features-title" href="home?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
                                                     <div class="features-content">ĐANG SỬ DỤNG</div>
                                                 </div>
                                             </div>

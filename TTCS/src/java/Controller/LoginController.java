@@ -5,11 +5,9 @@
 package Controller;
 
 import DAL.BaiDoXeDAO;
-import Model.BaiDoXe;
-import Model.ThongTinChiTiet;
+import Model.KhachHang;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DPV
  */
-@WebServlet(name = "BaiDoXeController", urlPatterns = {"/bai-do-xe"})
-public class BaiDoXeController extends HttpServlet {
+@WebServlet(name = "LoginController", urlPatterns = {"/login"})
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class BaiDoXeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BaiDoXeController</title>");
+            out.println("<title>Servlet LoginController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BaiDoXeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,23 +59,21 @@ public class BaiDoXeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BaiDoXeDAO dao = new BaiDoXeDAO();
-        String action = request.getParameter("action");
-        String Ma_bai_do_xe = request.getParameter("id");
-        if (action != null && action.equals("viewdetails")) {
-            ThongTinChiTiet ThongTinChiTiet = dao.ThongTinChiTiet(Ma_bai_do_xe);
-            BaiDoXe BaiDoXeByID = dao.getBaiDoXeByID(Ma_bai_do_xe);
-            request.setAttribute("BaiDoXeByID", BaiDoXeByID);
-            request.setAttribute("ThongTinChiTiet", ThongTinChiTiet);
-            
-            request.getRequestDispatcher("DetailsParkingSlotHome.jsp").forward(request, response);
-            return;
+        KhachHang kh = (KhachHang) request.getSession().getAttribute("kh");
+        if (kh != null) {
+            if (kh.getRole() == 1) {
+                request.getSession().setAttribute("kh", kh);
+                response.sendRedirect("bang-dieu-khien");
+                return;
+            } else {
+                request.getSession().setAttribute("kh", kh);
+                response.sendRedirect("home");
+                return;
+            }
         } else {
-            ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
-            request.setAttribute("BaiDoXe", BaiDoXe);
-            request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
-
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
     /**
@@ -91,7 +87,25 @@ public class BaiDoXeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        BaiDoXeDAO dao = new BaiDoXeDAO();
+        KhachHang kh = dao.getKhachHangByUserPass(username, password);
+        if (kh != null) {
+            if (kh.getRole() == 1) {
+                request.getSession().setAttribute("kh", kh);
+                response.sendRedirect("bang-dieu-khien");
+                return;
+            } else {
+                request.getSession().setAttribute("kh", kh);
+                response.sendRedirect("home");
+                return;
+            }
+        } else {
+            request.setAttribute("notify", "Login information is incorrect");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
+        }
     }
 
     /**

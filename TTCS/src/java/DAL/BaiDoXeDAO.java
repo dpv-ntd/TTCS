@@ -5,6 +5,7 @@
 package DAL;
 
 import Model.BaiDoXe;
+import Model.KhachHang;
 import Model.ThongTinChiTiet;
 import Model.ThongTinGuiXe;
 import java.sql.PreparedStatement;
@@ -38,6 +39,28 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
             Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return BaiDoXe;
+    }
+
+    public BaiDoXe getBaiDoXeByID(String Ma_bai_do_xe) {
+        try {
+            String sql = "SELECT * FROM BaiDoXe WHERE Ma_bai_do_xe = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, Ma_bai_do_xe);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                BaiDoXe bdx = new BaiDoXe();
+
+                bdx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                bdx.setTen_bai_do_xe(rs.getString("Ten_bai_do_xe"));
+                bdx.setDia_chi_bai_do_xe(rs.getString("Dia_chi_bai_do_xe"));
+                bdx.setTrang_thai_bai_do_xe(rs.getInt("Trang_thai_bai_do_xe"));
+
+                return bdx;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public int available() {
@@ -138,23 +161,36 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
 
     public ThongTinChiTiet ThongTinChiTiet(String Ma_bai_do_xe) {
         try {
-            String sql = "SELECT * from ThongTinGuiXe AS a LEFT JOIN KhachHang AS b ON a.Ma_khach_hang = b.Ma_khach_hang INNER JOIN BaiDoXe AS c ON a.Ma_bai_do_xe = c.Ma_bai_do_xe WHERE c.Ma_bai_do_xe = ?  AND Ngay_lay IS NULL";
+            String sql = "SELECT * from ThongTinGuiXe AS a LEFT JOIN KhachHang AS b ON a.Ma_khach_hang = b.Ma_khach_hang INNER JOIN BaiDoXe AS c ON a.Ma_bai_do_xe = c.Ma_bai_do_xe WHERE c.Ma_bai_do_xe = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, Ma_bai_do_xe);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 ThongTinChiTiet s = new ThongTinChiTiet();
-                s.setId(rs.getInt("id"));
-                s.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
-                s.setTen_bai_do_Xe(rs.getString("Ten_bai_do_Xe"));
-                s.setDia_chi_bai_do_xe(rs.getString("Dia_chi_bai_do_xe"));
+                BaiDoXe bdx = new BaiDoXe();
+                KhachHang kh = new KhachHang();
+                ThongTinGuiXe ttgx = new ThongTinGuiXe();
 
-                s.setMa_khach_hang(rs.getString("Ma_khach_hang"));
-                s.setTen_khach_hang(rs.getString("Ten_khach_hang"));
-                s.setBien_so_xe(rs.getString("Bien_so_xe"));
-                s.setCMND(rs.getString("CMND"));
-                s.setNgay_gui(rs.getDate("Ngay_gui"));
-                s.setDia_chi_khach_hang(rs.getString("Dia_chi_khach_hang"));
+                bdx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                bdx.setTen_bai_do_xe(rs.getString("Ten_bai_do_xe"));
+                bdx.setDia_chi_bai_do_xe(rs.getString("Dia_chi_bai_do_xe"));
+                bdx.setTrang_thai_bai_do_xe(rs.getInt("Trang_thai_bai_do_xe"));
+
+                kh.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                kh.setTen_khach_hang(rs.getString("Ten_khach_hang"));
+                kh.setCMND(rs.getString("CMND"));
+                kh.setDia_chi_khach_hang(rs.getString("Dia_chi_khach_hang"));
+
+                ttgx.setId(rs.getInt("id"));
+                ttgx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                ttgx.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                ttgx.setBien_so_xe(rs.getString("Bien_so_xe"));
+                ttgx.setNgay_gui(rs.getDate("Ngay_gui"));
+                ttgx.setNgay_lay(rs.getDate("Ngay_lay"));
+
+                s.setBaiDoXe(bdx);
+                s.setKhachHang(kh);
+                s.setThongTinGuiXe(ttgx);
                 return s;
             }
         } catch (SQLException ex) {
@@ -163,11 +199,75 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
         return null;
     }
 
+    public KhachHang getKhachHangByUserPass(String username, String password) {
+        try {
+            String sql = "SELECT * FROM KhachHang WHERE Tai_khoan = ? AND Mat_khau = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                KhachHang kh = new KhachHang();
+                kh.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                kh.setTen_khach_hang(rs.getString("Ten_khach_hang"));
+                kh.setDia_chi_khach_hang(rs.getString("Dia_chi_khach_hang"));
+                kh.setCMND(rs.getString("CMND"));
+                kh.setTai_khoan(rs.getString("Tai_khoan"));
+                kh.setMat_khau(rs.getString("Mat_khau"));
+                kh.setRole(rs.getInt("Role"));
+                return kh;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public KhachHang getKhachHangByUser(String username) {
+        try {
+            String sql = "SELECT * FROM KhachHang WHERE Tai_khoan = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                KhachHang kh = new KhachHang();
+                kh.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                kh.setTen_khach_hang(rs.getString("Ten_khach_hang"));
+                kh.setDia_chi_khach_hang(rs.getString("Dia_chi_khach_hang"));
+                kh.setCMND(rs.getString("CMND"));
+                kh.setTai_khoan(rs.getString("Tai_khoan"));
+                kh.setMat_khau(rs.getString("Mat_khau"));
+                kh.setRole(rs.getInt("Role"));
+                return kh;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void registerAccount(String username, String password, String name, String idc, String add) {
+        try {
+            String sql = "INSERT INTO KhachHang(Tai_khoan, Mat_khau, Ten_khach_hang, Dia_chi_khach_hang, CMND, Role) VALUES (?, ?, ?, ?, ?,'0');";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, name);
+            statement.setString(4, add);
+            statement.setString(5, idc);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) {
         BaiDoXeDAO dao = new BaiDoXeDAO();
         //System.out.println(dao.getBaiDoXe());
         //System.out.println(dao.available());
         //System.out.println(dao.vehiclesNumberEver());
-        System.out.println(dao.ThongTinChiTiet("DTC1002"));
+        //System.out.println(dao.ThongTinChiTiet("DTC1001"));
+        System.out.println(dao.getKhachHangByUserPass("kai123", "123"));
     }
+
 }

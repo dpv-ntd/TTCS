@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DPV
  */
-@WebServlet(name = "BaiDoXeController", urlPatterns = {"/bai-do-xe"})
-public class BaiDoXeController extends HttpServlet {
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class BaiDoXeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BaiDoXeController</title>");
+            out.println("<title>Servlet HomeController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BaiDoXeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,15 +69,14 @@ public class BaiDoXeController extends HttpServlet {
             BaiDoXe BaiDoXeByID = dao.getBaiDoXeByID(Ma_bai_do_xe);
             request.setAttribute("BaiDoXeByID", BaiDoXeByID);
             request.setAttribute("ThongTinChiTiet", ThongTinChiTiet);
-            
+
             request.getRequestDispatcher("DetailsParkingSlotHome.jsp").forward(request, response);
             return;
         } else {
             ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
             request.setAttribute("BaiDoXe", BaiDoXe);
-            request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
         }
-
     }
 
     /**
