@@ -79,7 +79,7 @@
                                             <div class="text-white">                               
                                                 <div>
                                                     <i class="fa-solid fa-car features-icon"></i>
-                                                    <div class="features-title">${bdx.getMa_bai_do_xe()}</div>
+                                                    <a href="bai-do-xe?action=viewdetails&id=${bdx.getMa_bai_do_xe()}" class="features-title">${bdx.getMa_bai_do_xe()}</a>
                                                     <div class="features-content">ĐANG SỬ DỤNG</div>
                                                 </div>
                                             </div>

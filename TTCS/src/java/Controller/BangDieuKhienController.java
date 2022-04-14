@@ -64,9 +64,15 @@ public class BangDieuKhienController extends HttpServlet {
         int Available = dao.available();
         int occupied = dao.occupied();
         int vehiclesNumberToday = dao.vehiclesNumberToday();
+        int vehiclesNumberYesterday = dao.vehiclesNumberYesterday();
+        int vehiclesNumberWeekend = dao.vehiclesNumberWeekend();
+        int vehiclesNumberEver = dao.vehiclesNumberEver();
         request.setAttribute("Available", Available);
         request.setAttribute("occupied", occupied);
         request.setAttribute("vehiclesNumberToday", vehiclesNumberToday);
+        request.setAttribute("vehiclesNumberYesterday", vehiclesNumberYesterday);
+        request.setAttribute("vehiclesNumberWeekend", vehiclesNumberWeekend);
+        request.setAttribute("vehiclesNumberEver", vehiclesNumberEver);
         request.getRequestDispatcher("Dashboard.jsp").forward(request, response);
     }
 

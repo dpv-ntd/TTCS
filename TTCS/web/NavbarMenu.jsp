@@ -29,7 +29,7 @@
                         </a>
                         <a class="nav-link" href="bai-do-xe">
                             <div class="sb-nav-link-icon"></div>
-                            <i class="fa-solid fa-road me-3"></i>Bãi đậu xe
+                            <i class="fa-solid fa-road me-3"></i>Bãi đỗ xe
                         </a>
                         <a class="nav-link" href="index.html">
                             <div class="sb-nav-link-icon"></div>

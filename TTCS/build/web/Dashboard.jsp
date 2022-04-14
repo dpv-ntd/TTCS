@@ -101,7 +101,7 @@
                                     <div class="text-white">
                                         <i class="fa-solid fa-car-side feature-icon"></i>
                                         <div>
-                                            <div class="feature-title">10</div>
+                                            <div class="feature-title">${vehiclesNumberYesterday}</div>
                                             <div class="feature-title">XE</div>
                                             <div class="feature-content">GỬI NGÀY HÔM QUA</div>
                                         </div>
@@ -113,7 +113,7 @@
                                     <div class="text-white">
                                         <i class="fa-solid fa-truck feature-icon"></i>
                                         <div>
-                                            <div class="feature-title">10</div>
+                                            <div class="feature-title">${vehiclesNumberWeekend}</div>
                                             <div class="feature-title">XE</div>
                                             <div class="feature-content">GỬI TRONG 7 NGÀY VỪA QUA</div>
                                         </div>
@@ -125,9 +125,9 @@
                                     <div class="text-white">
                                         <i class="fa-solid fa-truck-moving feature-icon"></i>
                                         <div>
-                                            <div class="feature-title">10</div>
+                                            <div class="feature-title">${vehiclesNumberEver}</div>
                                             <div class="feature-title">XE</div>
-                                            <div class="feature-content">ĐÃ GỬI TỪ TRƯỚC ĐẾN NAY</div>
+                                            <div class="feature-content">GỬI TỪ TRƯỚC ĐẾN NAY</div>
                                         </div>
                                     </div>
                                 </div>

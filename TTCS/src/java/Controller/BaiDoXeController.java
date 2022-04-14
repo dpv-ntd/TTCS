@@ -6,6 +6,7 @@ package Controller;
 
 import DAL.BaiDoXeDAO;
 import Model.BaiDoXe;
+import Model.ThongTinChiTiet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -61,10 +62,18 @@ public class BaiDoXeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BaiDoXeDAO dao = new BaiDoXeDAO();
-        ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
-        request.setAttribute("BaiDoXe", BaiDoXe);
-        request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
-        
+        String action = request.getParameter("action");
+        String Ma_bai_do_xe = request.getParameter("id");
+        if (action != null && action.equals("viewdetails")) {
+            ThongTinChiTiet ThongTinChiTiet = dao.ThongTinChiTiet(Ma_bai_do_xe);
+            request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
+            return;
+        } else {
+            ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
+            request.setAttribute("BaiDoXe", BaiDoXe);
+            request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
+        }
+
     }
 
     /**
