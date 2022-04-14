@@ -83,16 +83,16 @@ public class RegisterController extends HttpServlet {
         BaiDoXeDAO dao = new BaiDoXeDAO();
         KhachHang kh = dao.getKhachHangByUser(username);
         if (kh != null) {
-            request.setAttribute("notify", "Account already exists");
+            request.setAttribute("notify", "Tài khoản này đã tồn tại");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;
         }
         if (!password.equals(repassword)) {
-            request.setAttribute("notify", "Passwords are not the same");
+            request.setAttribute("notify", "Mật khẩu xác nhận không khớp");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;
         }
-        request.setAttribute("success", "Sign-up Success!");
+        request.setAttribute("success", "Đăng ký thành công!");
         dao.registerAccount(username, password, name, idc, add);
         request.getRequestDispatcher("Register.jsp").forward(request, response);
     }

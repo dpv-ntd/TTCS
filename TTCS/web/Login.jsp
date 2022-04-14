@@ -26,16 +26,16 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">LOGIN</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                                     <div class="card-body">
                                         <form action="login" method="POST">
                                             <div class="form-floating mb-3">
                                                 <input name="username" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Username</label>
+                                                <label for="inputEmail">Tài khoản</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" required=""/>
-                                                <label for="inputPassword">Password</label>
+                                                <label for="inputPassword">Mật khẩu</label>
                                             </div>
                                             <c:if test="${notify != null}">
                                                 <div class="form-check mb-3">
@@ -45,15 +45,15 @@
 
                                             <div class="form-check mb-3">
                                                 <input name="remember" class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                                <label class="form-check-label" for="inputRememberPassword">Nhớ mật khẩu</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="register">Bạn chưa có tài khoản? Đăng ký ngay</a></div>
                                     </div>
                                 </div>
                             </div>

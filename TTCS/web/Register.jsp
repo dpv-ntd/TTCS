@@ -25,32 +25,32 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng ký</h3></div>
                                     <div class="card-body">
                                         <form action="register" method="POST">
                                             <div class="form-floating mb-3">
                                                 <input name="name" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Name</label>
+                                                <label for="inputEmail">Họ tên</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="idc" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Identity card</label>
+                                                <label for="inputEmail">Chứng minh nhân dân</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="add" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Address</label>
+                                                <label for="inputEmail">Đại chỉ</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="username" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Username</label>
+                                                <label for="inputEmail">Tài khoản</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" required=""/>
-                                                <label for="inputPassword">Password</label>
+                                                <label for="inputPassword">Mật khẩu</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input name="repassword" class="form-control" id="inputPassword" type="password" placeholder="Password" required=""/>
-                                                <label for="inputPassword">Confirm Password</label>
+                                                <label for="inputPassword">Nhập lại mật khẩu</label>
                                             </div>
                                             <c:if test="${notify != null}">
                                                 <div class="form-check">
@@ -63,12 +63,12 @@
                                                 </div>
                                             </c:if>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                                                <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="login">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="login">Đã có tài khoản? Đăng nhập ngay</a></div>
                                     </div>
                                 </div>
                             </div>

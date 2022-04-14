@@ -78,7 +78,7 @@
                                             <th>BIỂN SỐ XE</th>
                                             <th>NGÀY GỬI</th>
                                             <th>NGÀY LẤY</th>
-                                            <th>THAO TÁC</th>
+                                            <th>TÌNH TRẠNG</th>
 
                                         </tr>
                                     </thead>
@@ -116,7 +116,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                            <div class="text-muted">Copyright &copy; KAI 2022</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;

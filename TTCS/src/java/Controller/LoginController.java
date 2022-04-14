@@ -103,7 +103,7 @@ public class LoginController extends HttpServlet {
                 return;
             }
         } else {
-            request.setAttribute("notify", "Login information is incorrect");
+            request.setAttribute("notify", "Thông tin đăng nhập không chính xác");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }
