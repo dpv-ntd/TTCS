@@ -38,6 +38,10 @@
                             <div class="sb-nav-link-icon"></div>
                             <i class="fa-solid fa-road me-3"></i>Bãi đỗ xe
                         </a>
+                        <a class="nav-link" href="manage-history">
+                            <div class="sb-nav-link-icon"></div>
+                            <i class="fa-solid fa-clock-rotate-left me-3"></i>Lịch sử gửi xe
+                        </a>
                         <a class="nav-link" href="index.html">
                             <div class="sb-nav-link-icon"></div>
                             <i class="fa-solid fa-square-plus me-3"></i>Thêm khách hàng

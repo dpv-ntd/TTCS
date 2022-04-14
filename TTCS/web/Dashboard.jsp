@@ -139,6 +139,30 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-3 d-flex align-items-stretch mb-4">
+                                <div class="feature-box" style="background-color: #595BE5">
+                                    <div class="text-white">
+                                        <i class="fa-solid fa-truck feature-icon"></i>
+                                        <div>
+                                            <div class="feature-title">${NumberToday}</div>
+                                            <div class="feature-title">LẦN</div>
+                                            <div class="feature-content">GỬI TRONG NGÀY HÔM NAY</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-stretch mb-4">
+                                <div class="feature-box" style="background-color: #C44D95">
+                                    <div class="text-white">
+                                        <i class="fa-solid fa-truck-moving feature-icon"></i>
+                                        <div>
+                                            <div class="feature-title">${NumberEver}</div>
+                                            <div class="feature-title">LẦN</div>
+                                            <div class="feature-content">GỬI TỪ TRƯỚC ĐẾN NAY</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>

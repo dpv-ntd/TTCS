@@ -98,7 +98,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberToday() {
         try {
             int vehiclesNumberToday = 0;
-            String sql = "SELECT COUNT(Id) AS vehiclesNumberToday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE() as DATE)";
+            String sql = "SELECT COUNT(DISTINCT Bien_so_xe) AS vehiclesNumberToday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE() as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -114,7 +114,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberYesterday() {
         try {
             int vehiclesNumberYesterday = 0;
-            String sql = "SELECT COUNT(Id) AS vehiclesNumberYesterday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE()-1 as DATE)";
+            String sql = "SELECT COUNT(DISTINCT Bien_so_xe) AS vehiclesNumberYesterday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE()-1 as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -130,7 +130,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberWeekend() {
         try {
             int vehiclesNumberWeekend = 0;
-            String sql = "SELECT COUNT(Id) AS vehiclesNumberWeekend from ThongTinGuiXe where CAST(Ngay_gui as DATE) >= CAST(GETDATE()-7 as DATE) AND CAST(Ngay_gui as DATE) <= CAST(GETDATE() as DATE)";
+            String sql = "SELECT COUNT(DISTINCT Bien_so_xe) AS vehiclesNumberWeekend from ThongTinGuiXe where CAST(Ngay_gui as DATE) >= CAST(GETDATE()-7 as DATE) AND CAST(Ngay_gui as DATE) <= CAST(GETDATE() as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -360,6 +360,60 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
             Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ThongTinGuiXe;
+    }
+
+    public ArrayList<ThongTinGuiXe> getLichSu() {
+        ArrayList<ThongTinGuiXe> ThongTinGuiXe = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM ThongTinGuiXe ORDER BY ID DESC";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                ThongTinGuiXe ttgx = new ThongTinGuiXe();
+                ttgx.setId(rs.getInt("Id"));
+                ttgx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                ttgx.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                ttgx.setBien_so_xe(rs.getString("Bien_so_xe"));
+                ttgx.setNgay_gui(rs.getDate("Ngay_gui"));
+                ttgx.setNgay_lay(rs.getDate("Ngay_lay"));
+                ThongTinGuiXe.add(ttgx);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ThongTinGuiXe;
+    }
+
+    public int NumberToday() {
+        try {
+            int NumberToday = 0;
+            String sql = "SELECT COUNT(ID) AS NumberToday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE() as DATE)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                NumberToday = rs.getInt("NumberToday");
+            }
+            return NumberToday;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int NumberEver() {
+        try {
+            int NumberEver = 0;
+            String sql = "SELECT COUNT(ID) AS NumberEver from ThongTinGuiXe";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                NumberEver = rs.getInt("NumberEver");
+            }
+            return NumberEver;
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }
