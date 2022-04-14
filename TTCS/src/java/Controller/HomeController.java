@@ -6,7 +6,9 @@ package Controller;
 
 import DAL.BaiDoXeDAO;
 import Model.BaiDoXe;
+import Model.KhachHang;
 import Model.ThongTinChiTiet;
+import Model.ThongTinGuiXe;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -64,6 +66,9 @@ public class HomeController extends HttpServlet {
         BaiDoXeDAO dao = new BaiDoXeDAO();
         String action = request.getParameter("action");
         String Ma_bai_do_xe = request.getParameter("id");
+        KhachHang kh = (KhachHang) request.getSession().getAttribute("kh");
+        ThongTinGuiXe ThongTinGuiXe = new ThongTinGuiXe();
+
         if (action != null && action.equals("viewdetails")) {
             ThongTinChiTiet ThongTinChiTiet = dao.ThongTinChiTiet(Ma_bai_do_xe);
             BaiDoXe BaiDoXeByID = dao.getBaiDoXeByID(Ma_bai_do_xe);
@@ -73,9 +78,18 @@ public class HomeController extends HttpServlet {
             request.getRequestDispatcher("DetailsParkingSlotHome.jsp").forward(request, response);
             return;
         } else {
-            ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
-            request.setAttribute("BaiDoXe", BaiDoXe);
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
+            if (kh != null) {
+                ThongTinGuiXe = dao.getThongTinGuiXe(kh.getMa_khach_hang());
+                ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
+                request.setAttribute("BaiDoXe", BaiDoXe);
+                request.setAttribute("ThongTinGuiXe", ThongTinGuiXe);
+                request.getRequestDispatcher("Home.jsp").forward(request, response);
+            } else {
+                ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
+                request.setAttribute("BaiDoXe", BaiDoXe);
+                request.getRequestDispatcher("Home.jsp").forward(request, response);
+            }
+
         }
     }
 

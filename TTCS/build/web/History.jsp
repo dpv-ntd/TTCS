@@ -58,35 +58,51 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">BÃI ĐỖ XE</h1>
+                        <h1 class="mt-4">LỊCH SỬ GỬI XE</h1>
                         <hr>
-                        <div class="row">
-                            <c:forEach items="${BaiDoXe}" var="bdx">
-                                <c:choose>
-                                    <c:when test="${bdx.getTrang_thai_bai_do_xe() == 0}">
-                                        <div class="features-box col-2" style="background-color: #2EE27E">
-                                            <div class="text-white">
-                                                <div>
-                                                    <i class="fa-solid fa-road features-icon"></i>
-                                                    <div><a class="features-title" href="home?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
-                                                    <div class="features-content">CÒN TRỐNG</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="features-box col-2" style="background-color: #F94928">
-                                            <div class="text-white">                               
-                                                <div>
-                                                    <i class="fa-solid fa-car features-icon me-5"></i>
-                                                    <div><a class="features-title" href="home?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
-                                                    <div class="features-content">ĐANG SỬ DỤNG</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
+                        <div class="card mb-4">
+
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>MÃ BÃI ĐỖ XE</th>
+                                            <th>BIỂN SỐ XE</th>
+                                            <th>NGÀY GỬI</th>
+                                            <th>NGÀY LẤY</th>
+                                            <th>THAO TÁC</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${history}" var="ls">
+                                            <tr>
+                                                <td>${ls.getId()}</td>
+                                                <td>${ls.getMa_bai_do_xe()}</td>
+                                                <td>${ls.getBien_so_xe()}</td>
+                                                <td>${ls.getNgay_gui()}</td>
+                                                <td>${ls.getNgay_lay()}</td>
+                                                <c:choose>
+                                                    <c:when test="${ls.getNgay_lay() != null}">
+                                                        <td><h6 class="text-success text-center">ĐÃ TRẢ CHỖ</h6></td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td class="text-center">
+                                                            <form action="cancel" method="POST">
+                                                                <input name="makhachhang" value="${ls.getMa_khach_hang()}" hidden="">
+                                                                <input name="mabaidoxe" value="${ls.getMa_bai_do_xe()}" hidden="">
+                                                                <button type="submit" class="btn btn-danger" style="font-weight: 500; border-radius: 2px">TRẢ CHỖ</button>
+                                                            </form>
+                                                        </td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </tr>
+                                        </c:forEach>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -105,11 +121,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="../js/scripts.js"></script>
+        <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../assets/demo/chart-area-demo.js"></script>
-        <script src="../assets/demo/chart-bar-demo.js"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../js/datatables-simple-demo.js"></script>
+        <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>

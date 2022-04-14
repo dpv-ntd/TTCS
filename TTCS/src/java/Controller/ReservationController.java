@@ -5,11 +5,8 @@
 package Controller;
 
 import DAL.BaiDoXeDAO;
-import Model.BaiDoXe;
-import Model.ThongTinChiTiet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DPV
  */
-@WebServlet(name = "BaiDoXeController", urlPatterns = {"/bai-do-xe"})
-public class BaiDoXeController extends HttpServlet {
+@WebServlet(name = "ReservationController", urlPatterns = {"/reservation"})
+public class ReservationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class BaiDoXeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BaiDoXeController</title>");
+            out.println("<title>Servlet ReservationController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BaiDoXeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ReservationController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,23 +58,7 @@ public class BaiDoXeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BaiDoXeDAO dao = new BaiDoXeDAO();
-        String action = request.getParameter("action");
-        String Ma_bai_do_xe = request.getParameter("id");
-        if (action != null && action.equals("viewdetails")) {
-            ThongTinChiTiet ThongTinChiTiet = dao.ThongTinChiTiet(Ma_bai_do_xe);
-            BaiDoXe BaiDoXeByID = dao.getBaiDoXeByID(Ma_bai_do_xe);
-            request.setAttribute("BaiDoXeByID", BaiDoXeByID);
-            request.setAttribute("ThongTinChiTiet", ThongTinChiTiet);
-            
-            request.getRequestDispatcher("DetailsParkingSlot.jsp").forward(request, response);
-            return;
-        } else {
-            ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
-            request.setAttribute("BaiDoXe", BaiDoXe);
-            request.getRequestDispatcher("ParkingSlot.jsp").forward(request, response);
-        }
-
+        processRequest(request, response);
     }
 
     /**
@@ -91,7 +72,14 @@ public class BaiDoXeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String bss = request.getParameter("bss");
+        String makhachhang = request.getParameter("makhachhang");
+        String mabaidoxe = request.getParameter("mabaidoxe");
+
+        BaiDoXeDAO dao = new BaiDoXeDAO();
+        dao.reservationParking(bss, makhachhang, mabaidoxe);
+        dao.updateReservationParkingSlot(mabaidoxe);
+        response.sendRedirect("home");
     }
 
     /**

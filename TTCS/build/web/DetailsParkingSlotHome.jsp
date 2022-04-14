@@ -75,8 +75,13 @@
                                                         <li>Mã bãi đỗ xe: <span class="text-success">${BaiDoXeByID.getMa_bai_do_xe()}</span></li>
                                                         <li>Tên bãi đỗ xe: <span class="text-success">${BaiDoXeByID.getTen_bai_do_xe()}</span></li>
                                                         <li>Địa chỉ bãi đỗ xe: <span class="text-success">${BaiDoXeByID.getDia_chi_bai_do_xe()}</span></li>
-                                                        <li>Trạng thái bãi đỗ xe: <span class="text-success pb-2">${BaiDoXeByID.getTrang_thai_bai_do_xe()==0 ? "Còn trống":"Đang sử dụng"}</span></li>
+                                                        <li>Trạng thái bãi đỗ xe: <span class="text-success pb-2">${BaiDoXeByID.getTrang_thai_bai_do_xe()==0 ? "CÒN TRỐNG":"ĐANG SỬ DỤNG"}</span></li>
                                                     </ul>
+                                                    <c:if test="${sessionScope.kh != null}">
+                                                        <button class="ms-4 btn-success btn-lg" style="font-weight: 500; border-radius: 2px" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal">ĐẶT CHỖ</button>
+                                                    </c:if>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -96,32 +101,55 @@
                                                         <li>Trạng thái bãi đỗ xe: <span class="text-danger pb-2">${BaiDoXeByID.getTrang_thai_bai_do_xe()==0 ? "Còn trống":"Đang sử dụng"}</span></li>
                                                         <br>
                                                     </ul>
+                                                    <c:if test="${sessionScope.kh.getMa_khach_hang() == ThongTinChiTiet.getKhachHang().getMa_khach_hang()}">
+                                                        <form action="cancel" method="POST">
+                                                            <input name="makhachhang" value="${sessionScope.kh.getMa_khach_hang()}" hidden="">
+                                                            <input name="mabaidoxe" value="${BaiDoXeByID.getMa_bai_do_xe()}" hidden="">
+                                                            <button type="submit" class="ms-4 btn-danger btn-lg" style="font-weight: 500; border-radius: 2px">TRẢ CHỖ</button>
+                                                        </form>
+
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                                <c:if test="${ThongTinChiTiet.getBaiDoXe().getTrang_thai_bai_do_xe()==1}">
-                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 py-2">
-                                        <div class="card border-danger">
-                                            <div class="card-body">
-                                                <h5 class="card-title pt-2 pb-2">Thông tin chủ xe - BKS: ${ThongTinChiTiet.getThongTinGuiXe().getBien_so_xe()}</h5> 
-                                                <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                                    <span class="visually-hidden">New alerts</span>
-                                                </span>
-                                                <ul style="font-weight: 500">
-                                                    <li>Mã khách hàng: <span class="text-danger">${ThongTinChiTiet.getKhachHang().getMa_khach_hang()}</span></li>
-                                                    <li>CMND: <span class="text-danger pb-2">${ThongTinChiTiet.getKhachHang().getCMND()}</span></li>
-                                                    <li>Tên khách hàng: <span class="text-danger">${ThongTinChiTiet.getKhachHang().getTen_khach_hang()}</span></li>
-                                                    <li>Địa chỉ khách hàng: <span class="text-danger">${ThongTinChiTiet.getKhachHang().getDia_chi_khach_hang()}</span></li>
-                                                    <li>Ngày gửi: <span class="text-danger pb-2">${ThongTinChiTiet.getThongTinGuiXe().getNgay_gui()}</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:if>
+                            </div>
 
-                            </div>  
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Điền thông tin đặt chỗ</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="reservation" method="POST">
+                                        <div class="form-floating mb-3">
+                                            <input name="bss" class="form-control" id="inputEmail" type="text" placeholder="Biển số xe"
+                                                   required="" />
+                                            <label for="inputEmail">Biển số xe</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input name="makhachhang" class="form-control" id="inputEmail" type="text" placeholder="Username"
+                                                   required="" hidden value="${sessionScope.kh.getMa_khach_hang()}"/>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input name="mabaidoxe" class="form-control" id="inputEmail" type="text" placeholder="Username"
+                                                   required="" hidden value="${BaiDoXeByID.getMa_bai_do_xe()}"/>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </main>

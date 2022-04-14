@@ -78,7 +78,7 @@
                                         <div class="features-box col-2" style="background-color: #F94928">
                                             <div class="text-white">                               
                                                 <div>
-                                                    <i class="fa-solid fa-car features-icon"></i>
+                                                    <i class="fa-solid fa-car features-icon me-5"></i>
                                                     <div><a class="features-title" href="home?action=viewdetails&id=${bdx.getMa_bai_do_xe()}">${bdx.getMa_bai_do_xe()}</a></div>
                                                     <div class="features-content">ĐANG SỬ DỤNG</div>
                                                 </div>
@@ -87,9 +87,6 @@
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-
-
-
                         </div>
                     </div>
                 </main>

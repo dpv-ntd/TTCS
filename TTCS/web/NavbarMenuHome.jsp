@@ -27,11 +27,15 @@
                             <div class="sb-nav-link-icon"></div>
                             <i class="fa-solid fa-road me-3"></i>Bãi đỗ xe
                         </a>
+                        <a class="nav-link" href="history">
+                            <div class="sb-nav-link-icon"></div>
+                            <i class="fa-solid fa-clock-rotate-left me-3"></i>Lịch sử gửi xe
+                        </a>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Adminstrator
+                    User
                 </div>
             </nav>
         </div>

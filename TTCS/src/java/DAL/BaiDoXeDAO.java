@@ -248,7 +248,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
 
     public void registerAccount(String username, String password, String name, String idc, String add) {
         try {
-            String sql = "INSERT INTO KhachHang(Tai_khoan, Mat_khau, Ten_khach_hang, Dia_chi_khach_hang, CMND, Role) VALUES (?, ?, ?, ?, ?,'0');";
+            String sql = "INSERT INTO KhachHang(Tai_khoan, Mat_khau, Ten_khach_hang, Dia_chi_khach_hang, CMND, Role) VALUES (?, ?, ?, ?, ?,'0')";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             statement.setString(2, password);
@@ -261,13 +261,105 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
         }
     }
 
+    public void reservationParking(String bss, String makhachhang, String mabaidoxe) {
+        try {
+            String sql = "INSERT INTO ThongTinGuiXe(Ma_bai_do_xe, Ma_khach_hang, Bien_so_xe, Ngay_gui) VALUES (?, ?, ?, GETDATE())";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mabaidoxe);
+            statement.setString(2, makhachhang);
+            statement.setString(3, bss);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateReservationParkingSlot(String mabaidoxe) {
+        try {
+            String sql = "UPDATE BaiDoXe SET Trang_thai_bai_do_xe = 1 WHERE Ma_bai_do_xe = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mabaidoxe);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateThongTinGui(String makhachhang) {
+        try {
+            String sql = "UPDATE ThongTinGuiXe SET Ngay_lay = GETDATE() WHERE Ma_khach_hang = ? AND Ngay_lay IS NULL";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, makhachhang);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateCancelParkingSlot(String mabaidoxe) {
+        try {
+            String sql = "UPDATE BaiDoXe SET Trang_thai_bai_do_xe = 0 WHERE Ma_bai_do_xe = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mabaidoxe);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ThongTinGuiXe getThongTinGuiXe(String ma_khach_hang) {
+        try {
+            String sql = "SELECT * FROM ThongTinGuiXe WHERE Ma_khach_hang = ? AND Ngay_lay IS NULL";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, ma_khach_hang);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                ThongTinGuiXe ttgx = new ThongTinGuiXe();
+                ttgx.setId(rs.getInt("Id"));
+                ttgx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                ttgx.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                ttgx.setBien_so_xe(rs.getString("Bien_so_xe"));
+                ttgx.setNgay_gui(rs.getDate("Ngay_gui"));
+                return ttgx;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         BaiDoXeDAO dao = new BaiDoXeDAO();
         //System.out.println(dao.getBaiDoXe());
         //System.out.println(dao.available());
         //System.out.println(dao.vehiclesNumberEver());
         //System.out.println(dao.ThongTinChiTiet("DTC1001"));
-        System.out.println(dao.getKhachHangByUserPass("kai123", "123"));
+        //System.out.println(dao.getKhachHangByUserPass("kai123", "123"));
+        //System.out.println(dao.getThongTinGuiXe("9").getMa_khach_hang());
+        System.out.println(dao.getLichSuGuiXe("9"));
+    }
+
+    public ArrayList<ThongTinGuiXe> getLichSuGuiXe(String makhachhang) {
+        ArrayList<ThongTinGuiXe> ThongTinGuiXe = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM ThongTinGuiXe WHERE Ma_khach_hang = ? ORDER BY ID DESC";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, makhachhang);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                ThongTinGuiXe ttgx = new ThongTinGuiXe();
+                ttgx.setId(rs.getInt("Id"));
+                ttgx.setMa_bai_do_xe(rs.getString("Ma_bai_do_xe"));
+                ttgx.setMa_khach_hang(rs.getString("Ma_khach_hang"));
+                ttgx.setBien_so_xe(rs.getString("Bien_so_xe"));
+                ttgx.setNgay_gui(rs.getDate("Ngay_gui"));
+                ttgx.setNgay_lay(rs.getDate("Ngay_lay"));
+                ThongTinGuiXe.add(ttgx);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ThongTinGuiXe;
     }
 
 }
