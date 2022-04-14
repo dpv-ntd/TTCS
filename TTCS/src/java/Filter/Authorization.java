@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author DPV
  */
-@WebFilter(filterName = "Authentication", urlPatterns = {"/history"})
-public class Authentication implements Filter {
+@WebFilter(filterName = "Authorization", urlPatterns = {"/bang-dieu-khien","/bai-do-xe"})
+public class Authorization implements Filter {
 
     private static final boolean debug = true;
 
@@ -34,13 +34,13 @@ public class Authentication implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public Authentication() {
+    public Authorization() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Authentication:DoBeforeProcessing");
+            log("Authorization:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -68,7 +68,7 @@ public class Authentication implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("Authentication:DoAfterProcessing");
+            log("Authorization:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -99,6 +99,7 @@ public class Authentication implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -109,10 +110,10 @@ public class Authentication implements Filter {
 
         KhachHang kh = (KhachHang) session.getAttribute("kh");
 
-        if (kh != null) {
+        if (kh != null && kh.getRole() == 1) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect("login");
+            res.sendRedirect("home");
         }
 
     }
@@ -146,7 +147,7 @@ public class Authentication implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("Authentication:Initializing filter");
+                log("Authorization:Initializing filter");
             }
         }
     }
@@ -157,9 +158,9 @@ public class Authentication implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("Authentication()");
+            return ("Authorization()");
         }
-        StringBuffer sb = new StringBuffer("Authentication(");
+        StringBuffer sb = new StringBuffer("Authorization(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

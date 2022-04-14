@@ -98,7 +98,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberToday() {
         try {
             int vehiclesNumberToday = 0;
-            String sql = "SELECT COUNT(ThongTinGuiXe.Id) AS vehiclesNumberToday from ThongTinGuiXe where Ngay_gui = CAST(GETDATE() as DATE)";
+            String sql = "SELECT COUNT(Id) AS vehiclesNumberToday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE() as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -114,7 +114,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberYesterday() {
         try {
             int vehiclesNumberYesterday = 0;
-            String sql = "SELECT COUNT(ThongTinGuiXe.Id) AS vehiclesNumberYesterday from ThongTinGuiXe where Ngay_gui = CAST(GETDATE()-1 as DATE)";
+            String sql = "SELECT COUNT(Id) AS vehiclesNumberYesterday from ThongTinGuiXe where CAST(Ngay_gui as DATE) = CAST(GETDATE()-1 as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -130,7 +130,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberWeekend() {
         try {
             int vehiclesNumberWeekend = 0;
-            String sql = "SELECT COUNT(ThongTinGuiXe.Id) AS vehiclesNumberWeekend from ThongTinGuiXe where Ngay_gui >= CAST(GETDATE()-7 as DATE) AND Ngay_gui <= CAST(GETDATE() as DATE)";
+            String sql = "SELECT COUNT(Id) AS vehiclesNumberWeekend from ThongTinGuiXe where CAST(Ngay_gui as DATE) >= CAST(GETDATE()-7 as DATE) AND CAST(Ngay_gui as DATE) <= CAST(GETDATE() as DATE)";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -146,7 +146,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
     public int vehiclesNumberEver() {
         try {
             int vehiclesNumberEver = 0;
-            String sql = "SELECT COUNT(DISTINCT Bien_so_xe) AS vehiclesNumberEver  from ThongTinGuiXe ";
+            String sql = "SELECT COUNT(DISTINCT Bien_so_xe) AS vehiclesNumberEver from ThongTinGuiXe ";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
