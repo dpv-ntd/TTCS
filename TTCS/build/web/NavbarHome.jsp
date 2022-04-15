@@ -43,10 +43,13 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>
                                 ${sessionScope.kh.getTai_khoan()}</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
-                                <li><a class="dropdown-item" href="#!">Đổi mật khẩu</a></li>
+                                <c:if test="${sessionScope.kh.getRole() == 1}">
+                                    <li><a class="dropdown-item" href="bang-dieu-khien"><i class="fas fa-tachometer-alt"></i> Bảng điều khiển</a></li>
+                                    </c:if>
+                                <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#profiles"><i class="fa-solid fa-circle-info"></i> Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="change-password" ><i class="fas fa-exchange-alt"></i> Đổi mật khẩu</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="logout">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" href="logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -54,12 +57,52 @@
                 <c:otherwise>
                     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                         <div class="d-flex">
-                            <a href="login" type="button" class="btn btn-warning">Login</a>
+                            <a href="login" type="button" class="btn btn-warning">Đăng nhập</a>
                         </div>
                     </ul>
                 </c:otherwise>
             </c:choose>
 
         </nav>
+        <!-- Modal profiles -->
+        <div class="modal fade" id="profiles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thay đổi thông tin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="profiles" method="POST">
+                            <div class="form-floating mb-3">
+                                <input name="username" class="form-control" id="inputEmail" type="text"
+                                       placeholder="Username" readonly="" value="${sessionScope.kh.getTai_khoan()}"/>
+                                <label for="inputEmail">Tài khoản</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input name="name" class="form-control" id="inputEmail" type="text" placeholder="Username"
+                                       required="" value="${sessionScope.kh.getTen_khach_hang()}"/>
+                                <label for="inputEmail">Họ tên</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input name="idc" class="form-control" id="inputEmail" type="text" placeholder="Username"
+                                       required="" value="${sessionScope.kh.getCMND()}"/>
+                                <label for="inputEmail">Chứng minh nhân dân</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input name="add" class="form-control" id="inputEmail" type="text" placeholder="Username"
+                                       required="" value="${sessionScope.kh.getDia_chi_khach_hang()}"/>
+                                <label for="inputEmail">Đại chỉ</label>
+                            </div>
+                            <input name="role" type="text" value="${sessionScope.kh.getRole()}" hidden=""/>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

@@ -307,7 +307,7 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
         }
     }
 
-    public ThongTinGuiXe getThongTinGuiXe(String ma_khach_hang) {
+    public ThongTinGuiXe checkTTGX(String ma_khach_hang) {
         try {
             String sql = "SELECT * FROM ThongTinGuiXe WHERE Ma_khach_hang = ? AND Ngay_lay IS NULL";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -416,4 +416,29 @@ public class BaiDoXeDAO extends BaseDAO<BaiDoXe> {
         return 0;
     }
 
+    public void updateKhachHang(String username, String name, String idc, String add) {
+        try {
+            String sql = "UPDATE KhachHang SET Ten_khach_hang = ?, CMND = ?, Dia_chi_khach_hang = ? WHERE Tai_khoan = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, idc);
+            statement.setString(3, add);
+            statement.setString(4, username);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void changePassword(String tai_khoan, String newpass) {
+        try {
+            String sql = "UPDATE KhachHang SET Mat_khau = ? WHERE Tai_khoan = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, newpass);
+            statement.setString(2, tai_khoan);
+            ResultSet rs = statement.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BaiDoXeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

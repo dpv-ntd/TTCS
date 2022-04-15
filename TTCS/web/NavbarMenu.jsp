@@ -30,6 +30,10 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
+                        <a class="nav-link" href="home">
+                            <div class="sb-nav-link-icon"></div>
+                            <i class="fa-solid fa-house me-3"></i>Trang chủ
+                        </a>
                         <a class="nav-link" href="bang-dieu-khien">
                             <div class="sb-nav-link-icon"></div>
                             <i class="fas fa-tachometer-alt me-3"></i>Bảng điều khiển
@@ -42,7 +46,7 @@
                             <div class="sb-nav-link-icon"></div>
                             <i class="fa-solid fa-clock-rotate-left me-3"></i>Lịch sử gửi xe
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"></div>
                             <i class="fa-solid fa-square-plus me-3"></i>Thêm khách hàng
                         </a>
@@ -61,8 +65,8 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Adminstrator
+                    <div class="small">Đăng nhập với:</div>
+                    Quản trị viên
                 </div>
             </nav>
         </div>

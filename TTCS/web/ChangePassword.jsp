@@ -1,10 +1,9 @@
 <%-- 
-    Document   : Login
-    Created on : Apr 14, 2022, 4:03:58 PM
+    Document   : Register
+    Created on : Apr 14, 2022, 5:26:49 PM
     Author     : DPV
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Đăng nhập</title>
+        <title>Login - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -26,34 +25,34 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Đổi mật khẩu</h3></div>
                                     <div class="card-body">
-                                        <form action="login" method="POST">
+                                        <form action="change-password" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input name="username" class="form-control" id="inputEmail" type="text" placeholder="Username" required=""/>
-                                                <label for="inputEmail">Tài khoản</label>
+                                                <input name="oldpass" class="form-control" id="inputEmail" type="password"
+                                                       placeholder="Username" required="" />
+                                                <label for="inputEmail">Mật khẩu cũ</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" required=""/>
-                                                <label for="inputPassword">Mật khẩu</label>
+                                                <input name="newpass" class="form-control" id="inputPassword" type="password"
+                                                       placeholder="Password" required="" />
+                                                <label for="inputPassword">Mật khẩu mới</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input name="renewpass" class="form-control" id="inputPassword" type="password"
+                                                       placeholder="Password" required="" />
+                                                <label for="inputPassword">Nhập lại mật khẩu mới</label>
                                             </div>
                                             <c:if test="${notify != null}">
-                                                <div class="form-check mb-3">
+                                                <div class="form-check">
                                                     <label class="text-danger">${notify}</label>
                                                 </div>
                                             </c:if>
-
-                                            <div class="form-check mb-3">
-                                                <input name="remember" class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Nhớ mật khẩu</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                                            <div class="modal-footer">
+                                                <a href="bang-dieu-khien" class="btn btn-secondary">Quay lại</a>
+                                                <button type="submit" class="btn btn-primary">Xác nhận</button>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register">Bạn chưa có tài khoản? Đăng ký ngay</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -67,4 +66,3 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
-

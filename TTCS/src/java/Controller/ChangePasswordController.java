@@ -5,13 +5,9 @@
 package Controller;
 
 import DAL.BaiDoXeDAO;
-import Model.BaiDoXe;
 import Model.KhachHang;
-import Model.ThongTinChiTiet;
-import Model.ThongTinGuiXe;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DPV
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "ChangePasswordController", urlPatterns = {"/change-password"})
+public class ChangePasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +38,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet ChangePasswordController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePasswordController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,31 +59,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BaiDoXeDAO dao = new BaiDoXeDAO();
-        String action = request.getParameter("action");
-        String Ma_bai_do_xe = request.getParameter("id");
-        KhachHang kh = (KhachHang) request.getSession().getAttribute("kh");
-        ThongTinGuiXe checkTTGX = new ThongTinGuiXe();
-
-        if (action != null && action.equals("viewdetails")) {
-            ThongTinChiTiet ThongTinChiTiet = dao.ThongTinChiTiet(Ma_bai_do_xe);
-            BaiDoXe BaiDoXeByID = dao.getBaiDoXeByID(Ma_bai_do_xe);
-            request.setAttribute("BaiDoXeByID", BaiDoXeByID);
-            request.setAttribute("ThongTinChiTiet", ThongTinChiTiet);
-            if (kh != null) {
-                checkTTGX = dao.checkTTGX(kh.getMa_khach_hang());
-                request.setAttribute("checkTTGX", checkTTGX);
-            }
-
-            request.getRequestDispatcher("DetailsParkingSlotHome.jsp").forward(request, response);
-            return;
-        } else {
-
-            ArrayList<BaiDoXe> BaiDoXe = dao.getBaiDoXe();
-            request.setAttribute("BaiDoXe", BaiDoXe);
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
-
-        }
+        request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
     }
 
     /**
@@ -101,7 +73,35 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String oldpass = request.getParameter("oldpass");
+        String newpass = request.getParameter("newpass");
+        String renewpass = request.getParameter("renewpass");
+
+        KhachHang Old = (KhachHang) request.getSession().getAttribute("kh");
+        String username = Old.getTai_khoan();
+        if (!Old.getMat_khau().equals(oldpass)) {
+            request.setAttribute("notify", "Mật khẩu cũ không chính xác");
+            request.getSession().setAttribute("kh", Old);
+            request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
+            return;
+        }
+        if (!newpass.equals(renewpass)) {
+            request.setAttribute("notify", "Mật khẩu xác nhận không khớp");
+            request.getSession().setAttribute("kh", Old);
+            request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
+            return;
+        }
+        BaiDoXeDAO dao = new BaiDoXeDAO();
+        dao.changePassword(username, newpass);
+        KhachHang kh = dao.getKhachHangByUser(username);
+        request.getSession().setAttribute("kh", kh);
+        if (kh.getRole() == 1) {
+            request.getRequestDispatcher("Dashboard.jsp").forward(request, response);
+            return;
+        } else {
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }
+
     }
 
     /**

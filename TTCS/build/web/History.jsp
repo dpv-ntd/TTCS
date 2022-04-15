@@ -73,23 +73,27 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>MÃ BÃI ĐỖ XE</th>
-                                            <th>BIỂN SỐ XE</th>
-                                            <th>NGÀY GỬI</th>
-                                            <th>NGÀY LẤY</th>
-                                            <th>TÌNH TRẠNG</th>
+                                            <th class="text-center">ID</th>
+                                            <th class="text-center">MÃ BÃI ĐỖ XE</th>
+                                            <th class="text-center">BIỂN SỐ XE</th>
+                                            <th class="text-center">NGÀY GỬI</th>
+                                            <th class="text-center">NGÀY LẤY</th>
+                                            <th class="text-center">TÌNH TRẠNG</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${history}" var="ls">
                                             <tr>
-                                                <td>${ls.getId()}</td>
-                                                <td>${ls.getMa_bai_do_xe()}</td>
-                                                <td>${ls.getBien_so_xe()}</td>
-                                                <td>${ls.getNgay_gui()}</td>
-                                                <td>${ls.getNgay_lay()}</td>
+                                                <td class="text-center" style="font-weight: 500">${ls.getId()}</td>
+                                                <td class="text-center">
+                                                    <a style="font-weight: 500" class="text-white text-center btn btn-warning" href="home?action=viewdetails&id=${ls.getMa_bai_do_xe()}">
+                                                        <i class="fa-solid fa-eye me-2"></i>${ls.getMa_bai_do_xe()}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center" style="font-weight: 500">${ls.getBien_so_xe()}</td>
+                                                <td class="text-center" style="font-weight: 500">${ls.getNgay_gui()}</td>
+                                                <td class="text-center" style="font-weight: 500">${ls.getNgay_lay()}</td>
                                                 <c:choose>
                                                     <c:when test="${ls.getNgay_lay() != null}">
                                                         <td><h6 class="text-success text-center">ĐÃ TRẢ CHỖ</h6></td>

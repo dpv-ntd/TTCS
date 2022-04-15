@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author DPV
  */
-@WebFilter(filterName = "Authentication", urlPatterns = {"/history"})
+@WebFilter(filterName = "Authentication", urlPatterns = {"/history","/change-password"})
 public class Authentication implements Filter {
 
     private static final boolean debug = true;

@@ -84,7 +84,7 @@
                                                         <li>Địa chỉ bãi đỗ xe: <span class="text-success">${BaiDoXeByID.getDia_chi_bai_do_xe()}</span></li>
                                                         <li>Trạng thái bãi đỗ xe: <span class="text-success pb-2">${BaiDoXeByID.getTrang_thai_bai_do_xe()==0 ? "CÒN TRỐNG":"ĐANG SỬ DỤNG"}</span></li>
                                                     </ul>
-                                                    <c:if test="${sessionScope.kh != null}">
+                                                    <c:if test="${sessionScope.kh != null && checkTTGX == null}">
                                                         <button class="ms-4 btn-success btn-lg" style="font-weight: 500; border-radius: 2px" data-bs-toggle="modal"
                                                                 data-bs-target="#exampleModal">ĐẶT CHỖ</button>
                                                     </c:if>

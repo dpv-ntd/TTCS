@@ -5,6 +5,7 @@
 package Controller;
 
 import DAL.BaiDoXeDAO;
+import Model.ThongTinGuiXe;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -72,11 +73,16 @@ public class ReservationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BaiDoXeDAO dao = new BaiDoXeDAO();
         String bss = request.getParameter("bss");
         String makhachhang = request.getParameter("makhachhang");
         String mabaidoxe = request.getParameter("mabaidoxe");
-
-        BaiDoXeDAO dao = new BaiDoXeDAO();
+        ThongTinGuiXe checkTTGX = dao.checkTTGX(makhachhang);
+        
+        if(checkTTGX != null){
+            response.sendRedirect("home");
+            return;
+        }
         dao.reservationParking(bss, makhachhang, mabaidoxe);
         dao.updateReservationParkingSlot(mabaidoxe);
         response.sendRedirect("home");

@@ -41,8 +41,8 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    User
+                    <div class="small">Đăng nhập với:</div>
+                    Người dùng
                 </div>
             </nav>
         </div>
